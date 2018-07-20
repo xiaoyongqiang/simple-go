@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>{{.title}}</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css">
+</head>
+<body>
+    <div class="layui-container">
+        <div class="layui-main site-inline layui-content">
+            <h1 class="site-h1">{{.title}}</h1>
+        </div>
+  
+    </div>
+</body>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+    layui.use('code', function(){ //加载code模块
+        layui.code(); //引用code方法
+    });
+</script>
+</html>

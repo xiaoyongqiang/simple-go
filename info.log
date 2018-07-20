@@ -1,0 +1,4 @@
+[GIN] 2018/07/20 - 11:15:53 | 200 |     730.095µs |       127.0.0.1 | GET      /v0/member?page=1&username=3333&time=2018-11-11&fulltime=2018-07-19
+[GIN] 2018/07/20 - 11:16:16 | 200 |     383.928µs |       127.0.0.1 | GET      /v0/member?page=1&username=3333&time=2018-11-11&fulltime=2018-07-19
+[GIN] 2018/07/20 - 11:16:53 | 200 |     197.896µs |       127.0.0.1 | GET      /v0/member?page=1&username=3333&time=2018-11-11&fulltime=2018-07-19
+[GIN] 2018/07/20 - 11:16:53 | 200 |     314.945µs |       127.0.0.1 | GET      /v0/member?page=1&username=3333&time=2018-11-11&fulltime=2018-07-19
