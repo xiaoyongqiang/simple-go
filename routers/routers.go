@@ -17,6 +17,7 @@ func InitRouter() *gin.Engine {
 
 	store := cookie.NewStore([]byte("secret"))
 	router.Use(sessions.Sessions("mysession", store))
+	// router.MaxMultipartMemory = 8 << 20  // 8 MiB
 	//router.Static("/favicon.ico", "/favicon.ico")
 	router.StaticFS("/public", http.Dir("public"))
 	router.LoadHTMLGlob("apis/views/*")

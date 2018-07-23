@@ -45,7 +45,7 @@ func Clear(c *gin.Context, id string) bool {
 
 //登录成功设置session会话
 func PreSession(c *gin.Context, id string) bool {
-	userAccessToken := "test.access.token"
+	userAccessToken := RandStr(32)
 	session := sessions.Default(c)
 	session.Set("user", id)
 	session.Set("security", userAccessToken)
@@ -80,7 +80,7 @@ func Checklogic(c *gin.Context) bool {
 }
 
 //输出信息
-func EchoMessage(c *gin.Context, code, status int, msg string) {
+func Result(c *gin.Context, code, status int, msg string) {
 	c.JSON(code, gin.H{
 		"status":  status,
 		"message": msg,

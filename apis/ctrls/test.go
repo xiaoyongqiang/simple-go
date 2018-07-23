@@ -16,7 +16,8 @@ func TestDb(c *gin.Context) {
 	mid, _ := strconv.Atoi(c.Param("id"))
 	mem, err := models.OneMember(mid)
 	if err != nil {
-		utils.EchoMessage(c, http.StatusExpectationFailed, http.StatusBadRequest, err.Error())
+		utils.Result(c, http.StatusExpectationFailed, http.StatusBadRequest, err.Error())
+		return
 	} else {
 		c.JSON(http.StatusOK, gin.H{
 			"status": http.StatusOK,
@@ -30,7 +31,8 @@ func TestValidator(c *gin.Context) {
 	person := new(params.Person)
 	// log.Printf("query:%s,urlquery:%s,formvalue:%s,default:%s", c.Query("username"), c.Request.URL.Query().Get("username"), c.Request.FormValue("username"), c.DefaultQuery("username", "anonymous"))
 	if errmsg := person.CheckParams(c.Request); errmsg != "" {
-		utils.EchoMessage(c, http.StatusExpectationFailed, http.StatusBadRequest, errmsg)
+		utils.Result(c, http.StatusExpectationFailed, http.StatusBadRequest, errmsg)
+		return
 	}
 
 	if c.ShouldBindQuery(person) == nil {
@@ -45,9 +47,40 @@ func TestValidator(c *gin.Context) {
 //POST,测试表单文件上传
 func TestFile(c *gin.Context) {
 	m := new(models.Member)
-	// m.LoginName = c.PostForm("login_name")
-	// m.Password = c.DefaultPostForm("password", "password")
 	m.LoginName = c.Request.FormValue("login_name")
 	m.Password = c.Request.FormValue("password")
 
+	file, err := c.FormFile("upload")
+	if err != nil {
+		utils.Result(c, http.StatusExpectationFailed, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	img, err := utils.CreateRandImgName("./photo/", file)
+	if err != nil {
+		utils.Result(c, http.StatusExpectationFailed, http.StatusBadRequest, err.Error())
+		return
+	}
+	err = c.SaveUploadedFile(file, img)
+	if err != nil {
+		utils.Result(c, http.StatusExpectationFailed, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	// Multipart form 数组图片
+	// form, _ := c.MultipartForm()
+	// files := form.File["upload[]"]
+	// log.Println(files)
+	// for _, file := range files {
+	// 	img, err := utils.CreateRandImgName("./photo/", file)
+	// 	if err != nil {
+	// 		utils.Result(c, http.StatusExpectationFailed, http.StatusBadRequest, err.Error())
+	// 		return
+	// 	}
+	// 	err = c.SaveUploadedFile(file, img)
+	// 	if err != nil {
+	// 		utils.Result(c, http.StatusExpectationFailed, http.StatusBadRequest, err.Error())
+	// 		return
+	// 	}
+	// }
 }

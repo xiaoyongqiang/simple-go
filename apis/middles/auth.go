@@ -1,7 +1,6 @@
 package middles
 
 import (
-	"apigin/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -9,10 +8,10 @@ import (
 
 func Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if !utils.Checklogic(c) {
-			noAuth(c, "Please login first")
-			return
-		}
+		// if !utils.Checklogic(c) {
+		// 	noAuth(c, "Please login first")
+		// 	return
+		// }
 
 		c.Next()
 		return
