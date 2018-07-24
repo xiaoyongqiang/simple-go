@@ -1,30 +1,30 @@
 package main
 
 import (
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
-	"github.com/gin-gonic/gin"
+	"fmt"
+	"log"
+	"reflect"
 )
 
-func main() {
-	r := gin.Default()
-	store := cookie.NewStore([]byte("secret"))
-	r.Use(sessions.Sessions("mysession", store))
+type resume struct {
+	Name string `json:"name" doc:"my name"`
+}
 
-	r.GET("/incr", func(c *gin.Context) {
-		session := sessions.Default(c)
-		var count int
-		v := session.Get("count")
-		if v == nil {
-			count = 0
-		} else {
-			count = v.(int)
-			count++
-		}
-		session.Set("count", count)
-		session.Save()
-		session.Get("count")
-		c.JSON(200, gin.H{"count": session.Get("count")})
-	})
-	r.Run(":8000")
+func findDoc(stru interface{}) map[string]string {
+	t := reflect.TypeOf(stru).Elem()
+	doc := make(map[string]string)
+
+	for i := 0; i < t.NumField(); i++ {
+		doc[t.Field(i).Tag.Get("json")] = t.Field(i).Tag.Get("doc")
+		log.Println(t.Field(i).Tag.Get("json"))
+	}
+
+	return doc
+
+}
+
+func main() {
+	var stru resume
+	doc := findDoc(&stru)
+	fmt.Printf("name：%s\n", doc["name"])
 }

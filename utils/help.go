@@ -35,6 +35,7 @@ func checkFileIsExist(filename string) bool {
 }
 
 func CreateRandImgName(path string, file *multipart.FileHeader) (string, error) {
+
 	if !checkFileIsExist(path) {
 		err := os.Mkdir(path, os.ModePerm)
 		if err != nil {
@@ -43,14 +44,9 @@ func CreateRandImgName(path string, file *multipart.FileHeader) (string, error) 
 		}
 	}
 
+	imgname := fmt.Sprintf("%s%s", time.Now().Format("20060102"), RandStr(8))
 	tail := strings.Split(file.Filename, ".")
-	imgname := RandStr(16)
 	imgstr := fmt.Sprintf("%s.%s", imgname, tail[len(tail)-1])
-
-	for checkFileIsExist(path + imgstr) {
-		imgname = RandStr(16)
-		imgstr = fmt.Sprintf("%s.%s", imgname, tail)
-	}
 
 	return path + imgstr, nil
 }

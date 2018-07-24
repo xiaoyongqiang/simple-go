@@ -1,9 +1,4 @@
 #!/bin/bash
-# @Author: haodaquan
-# @Date:   2017-06-29 17:44:45
-# @Last Modified by:   haodaquan
-# @Last Modified time: 2017-10-18 17:44:45
-
 
 case $1 in 
 	start)
